@@ -1,7 +1,7 @@
 import os
 import pygame
 
-from personagem import Player
+from sprites import Player
 
 
 def main():
