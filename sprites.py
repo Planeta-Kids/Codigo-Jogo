@@ -12,3 +12,14 @@ class Player(pygame.sprite.Sprite):
         self.images.append(self.smaller)
         self.image = self.images[0]
         self.rect = self.image.get_rect()
+
+    def update(self, keys):
+        #Tecla pressionada e velocidade
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= 3
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += 3
+        if keys[pygame.K_UP]:
+            self.rect.y -= 3
+        if keys[pygame.K_DOWN]:
+            self.rect.y += 3

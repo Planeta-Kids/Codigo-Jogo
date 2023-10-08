@@ -36,7 +36,16 @@ def main():
             running = False
 
 
-      player_list.draw(window) #Desenhar personagem
+       # Obtenha as teclas pressionadas
+      keys = pygame.key.get_pressed()
+
+        # Atualize o jogador com base nas teclas pressionadas
+      player.update(keys)
+
+      window.blit(background, (0, 0))  # Desenhe o fundo novamente para limpar a tela
+      player_list.draw(window)  # Desenhe o jogador
+      pygame.display.flip()
+      clock.tick(60)
       
 
 
