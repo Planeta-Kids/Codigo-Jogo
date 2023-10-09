@@ -36,14 +36,14 @@ def main():
             running = False
 
 
-       # Obtenha as teclas pressionadas
+       #Obtenha as teclas pressionadas
       keys = pygame.key.get_pressed()
 
-        # Atualize o jogador com base nas teclas pressionadas
-      player.update(keys)
+        #Atualize o jogador com base nas teclas pressionadas
+      player.update(keys, window_size[0], window_size[1])
 
-      window.blit(background, (0, 0))  # Desenhe o fundo novamente para limpar a tela
-      player_list.draw(window)  # Desenhe o jogador
+      window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
+      player_list.draw(window)  #Desenhe o jogador
       pygame.display.flip()
       clock.tick(60)
       
