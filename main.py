@@ -59,7 +59,7 @@ def main():
 
     controlPont = 0
     tempo = time.time()
-    lixo = ["peixe", "rad", "remedio", "seringa"]
+    lixo = ["garrafa", "maça", "pilha", "peixe", "rad", "seringa"]
     running = True
 
     x = 60
@@ -85,7 +85,7 @@ def main():
         binContami_position = ((binContami.rect.x + x), (binContami.rect.y + y))
         binHosp_position = ((binHosp.rect.x + x), (binHosp.rect.y + y))
         player_position = (player.rect.x, player.rect.y)         
-        trash_position = ((trash.rect.x + 70), (trash.rect.y + 10))
+        trash_position = ((trash.rect.x + 10), (trash.rect.y + 10))
         distPlTr = distance(player_position, trash_position)
         distContam = distance(binContami_position, player_position)
         distHosp = distance(binHosp_position, player_position)  
@@ -114,21 +114,21 @@ def main():
         #     controlPont = 0
         #     timer.get_elapsed_time(2)
 
-        if (distContam < 18) and (lixo[i-1] == "seringa"):
+        if (distContam < 18) and (lixo[i-1] == "pilha"):
             trash.spawn_time = time.time()
             pontuation.get_point()        
             trash.respawn()
             trash.controlPont = 0
             timer.get_elapsed_time(2)
 
-        if (distHosp < 18) and (lixo[i-1]== "remedio"):
+        if (distHosp < 18) and (lixo[i-1]== "seringa"):
             trash.spawn_time = time.time()
             pontuation.get_point() 
             trash.respawn()
             trash.controlPont = 0
             timer.get_elapsed_time(2)
 
-        if (distOrg < 18) and (lixo[i-1]== "peixe"):            
+        if (distOrg < 18) and ((lixo[i-1]== "peixe") or (lixo[i-1]== "maça")):            
             trash.spawn_time = time.time()
             pontuation.get_point() 
             trash.controlPont = 0
@@ -136,7 +136,7 @@ def main():
             timer.get_elapsed_time(2)
             
 
-        if (distPlast < 18) and (lixo[i-1]== "peixe"):
+        if (distPlast < 18) and (lixo[i-1]== "garrafa"):
             trash.spawn_time = time.time()
             pontuation.get_point() 
             trash.controlPont = 0
