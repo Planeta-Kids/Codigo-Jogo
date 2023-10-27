@@ -15,19 +15,19 @@ class Player(pygame.sprite.Sprite):
      
     def update(self, keys, screen_width, screen_height):        
         if keys[pygame.K_LEFT]:
-            self.rect.x -= 3
+            self.rect.x -= 4
             if self.rect.right < 0:
                 self.rect.left = screen_width
         if keys[pygame.K_RIGHT]:
-            self.rect.x += 3
+            self.rect.x += 4
             if self.rect.left > screen_width:
                 self.rect.right = 0
         if keys[pygame.K_UP]:
-            self.rect.y -= 3
+            self.rect.y -= 4
             if self.rect.bottom < 0:
                 self.rect.top = screen_height
         if keys[pygame.K_DOWN]:
-            self.rect.y += 3
+            self.rect.y += 4
             if self.rect.top > screen_height:
                 self.rect.bottom = 0
 
