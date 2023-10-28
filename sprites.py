@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.images[0]
         self.rect = self.image.get_rect()
 
-<<<<<<< HEAD
+
     # def update(self, keys):
     #     #Tecla pressionada e velocidade
     #     # if keys[pygame.K_LEFT]:
@@ -28,39 +28,21 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, keys, screen_width, screen_height, col):
         if keys[pygame.K_LEFT] and not col == "left":
-            self.rect.x -= 5
-            if self.rect.right < 0:
-                self.rect.left = screen_width
-        if keys[pygame.K_RIGHT] and not col == "right":
-            self.rect.x += 5
-            if self.rect.left > screen_width:
-                self.rect.right = 0
-        if keys[pygame.K_UP] and not col == "up":
-            self.rect.y -= 5
-            if self.rect.bottom < 0:
-                self.rect.top = screen_height
-        if keys[pygame.K_DOWN] and not col == "down":
-            self.rect.y += 5
-            if self.rect.top > screen_height:
-                self.rect.bottom = 0
-=======
-     
-    def update(self, keys, screen_width, screen_height):        
-        if keys[pygame.K_LEFT]:
             self.rect.x -= 4
             if self.rect.right < 0:
                 self.rect.left = screen_width
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and not col == "right":
             self.rect.x += 4
             if self.rect.left > screen_width:
                 self.rect.right = 0
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] and not col == "up":
             self.rect.y -= 4
             if self.rect.bottom < 0:
                 self.rect.top = screen_height
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_DOWN] and not col == "down":
             self.rect.y += 4
             if self.rect.top > screen_height:
                 self.rect.bottom = 0
 
->>>>>>> origin/feature/Lógica-de-jogabilidadeEmerson
+
+
