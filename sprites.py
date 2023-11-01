@@ -13,7 +13,10 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
      
-    def update(self, keys, screen_width, screen_height):        
+    def update(self, keys, screen_width, screen_height):     
+        # print("POSIÇÃO DO PERSONAGEM")   
+        # print("EIXO X: ", self.rect.x)   
+        # print("EIXO Y: ", self.rect.y)   
         if keys[pygame.K_LEFT]:
             self.rect.x -= 3
             if self.rect.right < 0:
