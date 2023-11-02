@@ -126,8 +126,8 @@ def main():
     pontuacao = 0
 
     while running:
-        i = trash.i
         if acabouTempo == False:
+            i = trash.i
 
             #Eventos    
             for event in pygame.event.get():
@@ -161,25 +161,25 @@ def main():
                 player.update(keys, window_size[0], window_size[1], Colisao.zerarVel("col8", player.rect, colis8.rect, 10))
             else:
                 player.update(keys, window_size[0], window_size[1], 0)
-
-            
+          
             if trash.controlPont == 1:
                 trash.rect.x = player.rect.x
                 trash.rect.y = player.rect.y
 
-            binOrg_position = ((binOrg.rect.x + x), (binOrg.rect.y + y))    
-            binPlast_position = ((binPlast.rect.x + x),(binPlast.rect.y + y))
-            binRad_position = ((binRad.rect.x + x),(binRad.rect.y + y))
+            binOrg_position     = ((binOrg.rect.x + x), (binOrg.rect.y + y))    
+            binPlast_position   = ((binPlast.rect.x + x),(binPlast.rect.y + y))
+            binRad_position     = ((binRad.rect.x + x),(binRad.rect.y + y))
             binContami_position = ((binContami.rect.x + x), (binContami.rect.y + y))
-            binHosp_position = ((binHosp.rect.x + x), (binHosp.rect.y + y))
-            player_position = (player.rect.x, player.rect.y)         
-            trash_position = ((trash.rect.x + 10), (trash.rect.y + 10))
-            distPlTr = distance(player_position, trash_position)
+            binHosp_position    = ((binHosp.rect.x + x), (binHosp.rect.y + y))
+            player_position     = (player.rect.x, player.rect.y)         
+            trash_position      = ((trash.rect.x + 10), (trash.rect.y + 10))
+
+            distPlTr   = distance(player_position, trash_position)
             distContam = distance(binContami_position, player_position)
-            distHosp = distance(binHosp_position, player_position)  
-            distOrg = distance(binOrg_position, player_position)  
-            distPlast = distance(binPlast_position, player_position)        
-            distRad = distance(binRad_position, player_position)  
+            distHosp   = distance(binHosp_position, player_position)  
+            distOrg    = distance(binOrg_position, player_position)  
+            distPlast  = distance(binPlast_position, player_position)        
+            distRad    = distance(binRad_position, player_position)  
 
             if distPlTr < 18 and trash.controlPont == 0:
                 #pontuation gera um ponto, tem que mudar dps pra verificação se jogou no lixo, esse foi só pra teste 
@@ -222,7 +222,6 @@ def main():
                 trash.respawn()
                 timer.get_elapsed_time(2)
 
-
             if (distPlast < 18) and (lixo[i-1]== "garrafa"):
                 trash.spawn_time = time.time()
                 pontuation.get_point() 
@@ -237,11 +236,8 @@ def main():
                 trash.respawn()
                 timer.get_elapsed_time(2)
 
-
-
             window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
             
-
             binHosp.spawn(840, -50)    
             binContami.spawn(265, 0)
             binRad.spawn(710, 230)
@@ -255,75 +251,55 @@ def main():
             trash_list.draw(window)
             timer.display(window)
             pygame.display.flip()       
-            
+
             clock.tick(60)        
-            player.update(keys, window_size[0], window_size[1])
-
-            player_position = (player.rect.x, player.rect.y)         
-            trash_position = ((trash.rect.x + 70),( trash.rect.y + 10) )
-            
-            dist = distance(player_position, trash_position)
-
-            if dist < 18:
-                timer.get_elapsed_time(2)
-                trash.respawn() 
-            else:
-                timer.get_elapsed_time(0) 
-            window.blit(background, (0, 0)) 
-            player_list.draw(window)  
-
-            if trash.visible:
-                trash.update()
-                trash_list.draw(window)
-
-            timer.display(window)
-            pygame.display.flip()       
+            # timer.display(window)
+            # pygame.display.flip()       
             finish_time = timer.display(window)
 
             if finish_time:
                 trocou = False
                 acabouTempo = True 
                 pontuacao = timer.get_punctuation()      
+                window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
 
-            clock.tick(120)   
+            clock.tick(60)   
 
             pygame.display.flip()
 
-    else:
+        else:
+            start_button = button.Button(30, 600, start_img, 1)
+            exit_button = button.Button(1050, 600, exit_img, 1)
 
 
-        start_button = button.Button(30, 600, start_img, 1)
-        exit_button = button.Button(1050, 600, exit_img, 1)
-
-
-        if start_button.draw(window):
-            print('START')
-            timer = Timer(font, (10, 10), 4000) 
-            acabouTempo = False
-                    
-        if exit_button.draw(window): 
-            running = False
-            print('EXIT')
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if start_button.draw(window):
+                print('START')
+                timer = Timer(font, (10, 10), 4000) 
+                acabouTempo = False
+                        
+            if exit_button.draw(window): 
                 running = False
+                print('EXIT')
 
-        screen = Screens()
-        timer_text = font.render('MENU INICIAL', True, (255, 255, 255))
-        
-        if (trocou == False):
-            screen.changeBackground(window=window, player_list=player_list, text=timer_text, nameBackground="FundoMain.jpg")
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
 
-            screen.displayPunctuation(window=window, text=timer_text, punctuation=pontuacao)
-            trocou = True
+            screen = Screens()
+            timer_text = font.render('MENU INICIAL', True, (255, 255, 255))
+            
+            if (trocou == False):
+                screen.changeBackground(window=window, player_list=player_list, text=timer_text, nameBackground="FundoMain.jpg")
 
-        clock.tick(120)     
+                screen.displayPunctuation(window=window, text=timer_text, punctuation=pontuacao)
+                trocou = True
 
-pygame.display.flip()
+            clock.tick(120)     
+
+            pygame.display.flip()
     
-# Fecha o jogo após loop terminar
-pygame.quit()
+    # Fecha o jogo após loop terminar
+    pygame.quit()
 
 def distance(point1, point2):    
    return math.sqrt((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2)

@@ -20,7 +20,7 @@ class Timer:
     def display(self, screen):
         if (self.finish_time) :
             timer_text = self.font.render('ACABOU O TEMPO', True, (255, 255, 255))
-            print('acabou');
+            print('ACABOU O TEMPO');
         else :
             seconds = self.time % 60
             minutes = int(self.time / 60) % 60
@@ -36,9 +36,6 @@ class Timer:
             if (seconds == 0 and minutes == 0):
                 self.finish_time = True
             else: 
-                print("OPAAAA")
                 self.time -= 1
-
-                print("Tempo: ", self.time)
         return self.finish_time
    
