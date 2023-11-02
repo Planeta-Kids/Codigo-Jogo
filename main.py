@@ -49,43 +49,43 @@ def main():
     font = pygame.font.Font(None, 36)
     timer = Timer(font, (10, 10), 4000)     
 
-      #instanciando pontuação
-      pontuation = Pontuation(font, (1000,10))
-      clock = pygame.time.Clock()
-      clock.tick(60)
+    #instanciando pontuação
+    pontuation = Pontuation(font, (1000,10))
+    clock = pygame.time.Clock()
+    clock.tick(60)
 
 
-      #Criar retangulos e colisão
-      for i in range(len(coords)):
-         x, y, width, height = coords[i]
-         globals()["colis" + str(i)] = Rect(x, y, width, height)
-         print(i)
+    #Criar retangulos e colisão
+    for i in range(len(coords)):
+        x, y, width, height = coords[i]
+        globals()["colis" + str(i)] = Rect(x, y, width, height)
+        print(i)
 
-      player = Player()   # spawn player
-      player.rect.x = 605   # go to x
-      player.rect.y = 415   # go to y
-      player_list = pygame.sprite.Group()
-      player_list.add(player)
+    player = Player()   # spawn player
+    player.rect.x = 605   # go to x
+    player.rect.y = 415   # go to y
+    player_list = pygame.sprite.Group()
+    player_list.add(player)
 
 
-      #Obtenha as teclas pressionadas
-      keys = pygame.key.get_pressed()
+    #Obtenha as teclas pressionadas
+    keys = pygame.key.get_pressed()
 
-      #Atualize o jogador com base nas teclas pressionadas
-      
+    #Atualize o jogador com base nas teclas pressionadas
+    
 
-      window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
-      player_list.draw(window)  #Desenhe o jogador
-      pygame.display.flip()
-      clock.tick(60)
-      
-      #x, y = pygame.mouse.get_pos()
-      #pos = myfont.render(f'x = {x} y = {y}', False, (0, 0, 0))
-      #window.blit(pos, (990, 30))
+    window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
+    player_list.draw(window)  #Desenhe o jogador
+    pygame.display.flip()
+    clock.tick(60)
+    
+    #x, y = pygame.mouse.get_pos()
+    #pos = myfont.render(f'x = {x} y = {y}', False, (0, 0, 0))
+    #window.blit(pos, (990, 30))
 
-      trash = Trash(window_size[0], window_size[1])
-      trash_list = pygame.sprite.Group()    
-      trash_list.add(trash)
+    trash = Trash(window_size[0], window_size[1])
+    trash_list = pygame.sprite.Group()    
+    trash_list.add(trash)
     # Cria lixo
     trash = Trash(window_size[0], window_size[1])
     trash_list = pygame.sprite.Group()
