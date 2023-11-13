@@ -7,13 +7,13 @@ class Screens:
 
     def __init__(self):
         self.controllPunctuation = [
-            {'background': '0Estrelas.png',   'points': 0},
-            {'background': '0.5Estrelas.png', 'points': 5},
-            {'background': '1Estrela.png',    'points': 10},
-            {'background': '1.5Estrelas.png', 'points': 15},
-            {'background': '2Estrelas.png',   'points': 20},    
-            {'background': '2.5Estrelas.png', 'points': 25},    
-            {'background': '3Estrelas.png',   'points': 30}
+            {'background': 'Arquivos/estrelas/0Estrelas.png',   'points': 14.3}, 
+            {'background': 'Arquivos/estrelas/0.5Estrela.png',  'points': 28.6}, 
+            {'background': 'Arquivos/estrelas/1Estrela.png',    'points': 42.9},
+            {'background': 'Arquivos/estrelas/1.5Estrelas.png', 'points': 57.2},
+            {'background': 'Arquivos/estrelas/2Estrelas.png',   'points': 71.5},
+            {'background': 'Arquivos/estrelas/2.5Estrelas.png', 'points': 85.8},
+            {'background': 'Arquivos/estrelas/3Estrelas.png',   'points': 100}
         ]
 
     def changeBackground(self, window, player_list, text, nameBackground):
@@ -38,17 +38,28 @@ class Screens:
         player_list.draw(window) 
 
 
+    def changeTutorialScreen(self, window, nameBackground):
+        window_size = (1280, 720)
+        window = pygame.display.set_mode(window_size)
+        
+        backgroundUpdated = pygame.image.load(os.path.join("Arquivos/tutorial", nameBackground))
+        backgroundUpdated = pygame.transform.scale(backgroundUpdated, (1280, 720))
+
+        window.blit(backgroundUpdated, (0, 0))
+        pygame.display.update()
+
+
     def displayPunctuation(self, window, text, punctuation):
         print("displayPunctuation")
         print("lista: ", self.controllPunctuation)
-
-
+        percPunctuation = (punctuation * 100) / 100;
+        print("porcentagem obtida: ", percPunctuation)
         for stars in self.controllPunctuation:
             print("Pontução da vez: ", stars.get('points'))
-            if (punctuation == stars.get('points')):
+            if (percPunctuation < stars.get('points')):
                 print("Qual estrela mostrar: ", stars.get('background'))
 
-                displayStar = pygame.image.load(os.path.join("Arquivos", stars.get('background')))
+                displayStar = pygame.image.load(os.path.join(stars.get('background')))
                 displayStar = pygame.transform.scale(displayStar, (400, 100))
                 window.blit(displayStar, (450, 150))
                 pygame.display.update()

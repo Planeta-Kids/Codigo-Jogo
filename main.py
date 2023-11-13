@@ -47,12 +47,12 @@ def main():
 
     # Cria cronometro   
     font = pygame.font.Font(None, 36)
-    timer = Timer(font, (10, 10), 4000)     
+    timer = Timer(font, (10, 10), 1800)     
 
     #instanciando pontuação
     pontuation = Pontuation(font, (1000,10))
     clock = pygame.time.Clock()
-    clock.tick(60)
+    clock.tick(120)
 
 
     #Criar retangulos e colisão
@@ -72,12 +72,10 @@ def main():
     keys = pygame.key.get_pressed()
 
     #Atualize o jogador com base nas teclas pressionadas
-    
-
     window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
     player_list.draw(window)  #Desenhe o jogador
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(120)
     
     #x, y = pygame.mouse.get_pos()
     #pos = myfont.render(f'x = {x} y = {y}', False, (0, 0, 0))
@@ -92,9 +90,11 @@ def main():
     trash_list.add(trash)
 
     #Carrega os botões
-    start_img = pygame.image.load('Arquivos/BotaoVoltar.png').convert_alpha()
-    exit_img = pygame.image.load('Arquivos/BotaoProximo.png').convert_alpha()
-
+    botaoJogarImg = pygame.image.load('Arquivos/botoes/BotaoJogarPixel.png').convert_alpha()
+    botaoMenuImg  = pygame.image.load('Arquivos/botoes/BotaoTutorialPixel.png').convert_alpha()
+    botaoSairImg  = pygame.image.load('Arquivos/botoes/BotaoSairPixel.png').convert_alpha()
+    botaoAnteriorImg = pygame.image.load('Arquivos/botoes/Anterior.png').convert_alpha()
+    botaoProximoImg  = pygame.image.load('Arquivos/botoes/Proximo.png').convert_alpha()
 
     binContami = Bin("lixeiroContami")
     bin_list = pygame.sprite.Group()
@@ -102,7 +102,6 @@ def main():
 
     binHosp = Bin("lixeiroHosp")
     bin_list.add(binHosp)
-
 
     binOrg = Bin("lixeiroOrg")
     bin_list.add(binOrg)
@@ -113,20 +112,27 @@ def main():
     binRad = Bin("lixeiroRad")
     bin_list.add(binRad)
 
+    binPapel = Bin("lixeiroPapel")
+    bin_list.add(binPapel)
+
     controlPont = 0
     tempo = time.time()
     lixo = ["garrafa", "maça", "pilha", "peixe", "rad", "seringa"]
     running = True
 
     x = 60
-    y = 50
+    y = 55
 
-    acabouTempo = False
+    telaMenuInicial = True
     trocou = False
     pontuacao = 0
+    pontuacaoMax = 0
+    tutorial = False
+    trocouTutorial = False
+    telaTutorial = 1
 
     while running:
-        if acabouTempo == False:
+        if telaMenuInicial == False:
             i = trash.i
 
             #Eventos    
@@ -171,6 +177,7 @@ def main():
             binRad_position     = ((binRad.rect.x + x),(binRad.rect.y + y))
             binContami_position = ((binContami.rect.x + x), (binContami.rect.y + y))
             binHosp_position    = ((binHosp.rect.x + x), (binHosp.rect.y + y))
+            binPapel_position   = ((binPapel.rect.x + x), (binPapel.rect.y + y))
             player_position     = (player.rect.x, player.rect.y)         
             trash_position      = ((trash.rect.x + 10), (trash.rect.y + 10))
 
@@ -180,6 +187,7 @@ def main():
             distOrg    = distance(binOrg_position, player_position)  
             distPlast  = distance(binPlast_position, player_position)        
             distRad    = distance(binRad_position, player_position)  
+            distPapel  = distance(binPapel_position, player_position)  
 
             if distPlTr < 18 and trash.controlPont == 0:
                 #pontuation gera um ponto, tem que mudar dps pra verificação se jogou no lixo, esse foi só pra teste 
@@ -206,35 +214,42 @@ def main():
                 pontuation.get_point()        
                 trash.respawn()
                 trash.controlPont = 0
-                timer.get_elapsed_time(2)
+                timer.get_elapsed_time(300)
 
             if (distHosp < 18) and (lixo[i-1]== "seringa"):
                 trash.spawn_time = time.time()
                 pontuation.get_point() 
                 trash.respawn()
                 trash.controlPont = 0
-                timer.get_elapsed_time(2)
+                timer.get_elapsed_time(300)
 
             if (distOrg < 18) and ((lixo[i-1]== "peixe") or (lixo[i-1]== "maça")):            
                 trash.spawn_time = time.time()
                 pontuation.get_point() 
                 trash.controlPont = 0
                 trash.respawn()
-                timer.get_elapsed_time(2)
+                timer.get_elapsed_time(300)
 
             if (distPlast < 18) and (lixo[i-1]== "garrafa"):
                 trash.spawn_time = time.time()
                 pontuation.get_point() 
                 trash.controlPont = 0
                 trash.respawn()
-                timer.get_elapsed_time(2)
+                timer.get_elapsed_time(300)
 
             if (distRad < 18) and (lixo[i-1]== "rad"):
                 trash.spawn_time = time.time()
                 pontuation.get_point() 
                 trash.controlPont = 0
                 trash.respawn()
-                timer.get_elapsed_time(2)
+                timer.get_elapsed_time(300)
+
+            if (distPapel < 18) and (lixo[i-1]== "caixa" or (lixo[i-1]== "Papel")):
+                trash.spawn_time = time.time()
+                pontuation.get_point() 
+                trash.controlPont = 0
+                trash.respawn()
+                timer.get_elapsed_time(300)
 
             window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
             
@@ -243,6 +258,7 @@ def main():
             binRad.spawn(710, 230)
             binOrg.spawn(10, 310)
             binPlast.spawn(450, 500)
+            binPapel.spawn(940, 300)
 
             bin_list.draw(window)
             player_list.draw(window) 
@@ -252,52 +268,107 @@ def main():
             timer.display(window)
             pygame.display.flip()       
 
-            clock.tick(60)        
+            clock.tick(120)        
             # timer.display(window)
             # pygame.display.flip()       
             finish_time = timer.display(window)
 
             if finish_time:
                 trocou = False
-                acabouTempo = True 
-                pontuacao = timer.get_punctuation()      
+                telaMenuInicial = True 
+                pontuacao = timer.get_punctuation() * 4   
+                if pontuacao > pontuacaoMax:
+                    pontuacaoMax = pontuacao 
                 window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
-
-            clock.tick(60)   
+                
+            clock.tick(120)   
 
             pygame.display.flip()
 
         else:
-            start_button = button.Button(30, 600, start_img, 1)
-            exit_button = button.Button(1050, 600, exit_img, 1)
+            if tutorial == False:
+                botaoJogar = button.Button(30, 600, botaoJogarImg, 0.15)
+                botaoMenu  = button.Button(550, 600, botaoMenuImg, 0.15)
+                botaoSair  = button.Button(1050, 600, botaoSairImg, 0.15)
 
+                if botaoJogar.draw(window):
+                    print('START')
+                    timer = Timer(font, (10, 10), 1800) 
+                    telaMenuInicial = False
+                            
+                if botaoSair.draw(window): 
+                    print('EXIT')
 
-            if start_button.draw(window):
-                print('START')
-                timer = Timer(font, (10, 10), 4000) 
-                acabouTempo = False
-                        
-            if exit_button.draw(window): 
-                running = False
-                print('EXIT')
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
                     running = False
 
-            screen = Screens()
-            timer_text = font.render('MENU INICIAL', True, (255, 255, 255))
-            
-            if (trocou == False):
-                screen.changeBackground(window=window, player_list=player_list, text=timer_text, nameBackground="FundoMain.jpg")
+                if botaoMenu.draw(window):
+                    print('TUTORIAL')
+                    tutorial = True
+                    telaTutorial = 1
 
-                screen.displayPunctuation(window=window, text=timer_text, punctuation=pontuacao)
-                trocou = True
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
 
-            clock.tick(120)     
+                screen = Screens()
+                timer_text = font.render('MENU INICIAL', True, (255, 255, 255))
 
-            pygame.display.flip()
-    
+                if (trocou == False):
+                    screen.changeBackground(window=window, player_list=player_list, text=timer_text, nameBackground="FundoMain.jpg")
+                    screen.displayPunctuation(window=window, text=timer_text, punctuation=pontuacao)
+                    record_text = font.render(f'Record de pontos: {pontuacaoMax}', True, (255, 255, 255))
+                    window.blit(record_text, (520,250))  
+                    trocou = True
+
+                clock.tick(120)     
+
+                pygame.display.flip()
+            else:
+
+                voltaMenuInical = False
+
+                botaoAnterior = button.Button(30, 550, botaoAnteriorImg, 0.15)
+                botaoProximo  = button.Button(1180, 550, botaoProximoImg, 0.15)
+
+                if botaoAnterior.draw(window):
+                    if telaTutorial == 1:
+                        print("Acabou o tutorial, primeira tela")
+                        voltaMenuInical = True
+                       
+                    else:
+                        trocouTutorial = False
+                        telaTutorial -= 1
+
+                if botaoProximo.draw(window):
+                    if telaTutorial == 8:
+                        print("Acabou o tutorial, ultima tela")
+                        voltaMenuInical = True
+
+                    else:
+                        trocouTutorial = False
+                        telaTutorial += 1
+
+                if (trocouTutorial == False):
+                    window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
+
+                    screen.changeTutorialScreen(window=window, nameBackground=str(telaTutorial)+str(".png"))
+                    trocouTutorial = True
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+
+                if (voltaMenuInical):
+                    telaMenuInicial = True
+                    trocou = False
+                    tutorial = False
+                    trocouTutorial = False
+                    telaTutorial = 1 
+
+                clock.tick(120)     
+
+                pygame.display.flip()
+
     # Fecha o jogo após loop terminar
     pygame.quit()
 

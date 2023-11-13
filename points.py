@@ -12,6 +12,3 @@ class Pontuation:
     def display(self, screen):         
         timer_text = self.font.render(f'Pontuação: {self.points} ', True, (255, 255, 255))
         screen.blit(timer_text, self.position)
-
-
-   
