@@ -6,7 +6,7 @@ import time
 class Trash(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
         pygame.sprite.Sprite.__init__(self)
-        self.lixo = ["garrafa", "maça", "pilha", "peixe", "rad", "seringa", "Papel", "caixa"]
+        self.lixo = ["Talher", "Papel", "garrafa", "maça", "pilha", "peixe", "Lata", "caixa"]
         self.i = 0
         self.controlPont = 0
         self.screen_width = screen_width

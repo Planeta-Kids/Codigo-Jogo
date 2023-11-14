@@ -100,8 +100,8 @@ def main():
     bin_list = pygame.sprite.Group()
     bin_list.add(binContami)
 
-    binHosp = Bin("lixeiroHosp")
-    bin_list.add(binHosp)
+    # binHosp = Bin("lixeiroHosp")
+    # bin_list.add(binHosp)
 
     binOrg = Bin("lixeiroOrg")
     bin_list.add(binOrg)
@@ -109,15 +109,18 @@ def main():
     binPlast = Bin("lixeiroPlast")
     bin_list.add(binPlast)
 
-    binRad = Bin("lixeiroRad")
-    bin_list.add(binRad)
+    # binRad = Bin("lixeiroRad")
+    # bin_list.add(binRad)
 
     binPapel = Bin("lixeiroPapel")
     bin_list.add(binPapel)
 
+    binMetal = Bin("lixeiroMetal")
+    bin_list.add(binMetal)
+
     controlPont = 0
     tempo = time.time()
-    lixo = ["garrafa", "maça", "pilha", "peixe", "rad", "seringa"]
+    lixo = ["Talher", "Papel", "garrafa", "maça", "pilha", "peixe", "Lata", "caixa"]
     running = True
 
     x = 60
@@ -174,20 +177,22 @@ def main():
 
             binOrg_position     = ((binOrg.rect.x + x), (binOrg.rect.y + y))    
             binPlast_position   = ((binPlast.rect.x + x),(binPlast.rect.y + y))
-            binRad_position     = ((binRad.rect.x + x),(binRad.rect.y + y))
+            # binRad_position     = ((binRad.rect.x + x),(binRad.rect.y + y))
             binContami_position = ((binContami.rect.x + x), (binContami.rect.y + y))
-            binHosp_position    = ((binHosp.rect.x + x), (binHosp.rect.y + y))
+            # binHosp_position    = ((binHosp.rect.x + x), (binHosp.rect.y + y))
             binPapel_position   = ((binPapel.rect.x + x), (binPapel.rect.y + y))
+            binMetal_position   = ((binMetal.rect.x + x), (binMetal.rect.y + y))
             player_position     = (player.rect.x, player.rect.y)         
             trash_position      = ((trash.rect.x + 10), (trash.rect.y + 10))
 
             distPlTr   = distance(player_position, trash_position)
             distContam = distance(binContami_position, player_position)
-            distHosp   = distance(binHosp_position, player_position)  
+            # distHosp   = distance(binHosp_position, player_position)  
             distOrg    = distance(binOrg_position, player_position)  
             distPlast  = distance(binPlast_position, player_position)        
-            distRad    = distance(binRad_position, player_position)  
+            # distRad    = distance(binRad_position, player_position)  
             distPapel  = distance(binPapel_position, player_position)  
+            distMetal  = distance(binMetal_position, player_position)  
 
             if distPlTr < 18 and trash.controlPont == 0:
                 #pontuation gera um ponto, tem que mudar dps pra verificação se jogou no lixo, esse foi só pra teste 
@@ -216,12 +221,12 @@ def main():
                 trash.controlPont = 0
                 timer.get_elapsed_time(300)
 
-            if (distHosp < 18) and (lixo[i-1]== "seringa"):
-                trash.spawn_time = time.time()
-                pontuation.get_point() 
-                trash.respawn()
-                trash.controlPont = 0
-                timer.get_elapsed_time(300)
+            # if (distHosp < 18) and (lixo[i-1]== "seringa"):
+            #     trash.spawn_time = time.time()
+            #     pontuation.get_point() 
+            #     trash.respawn()
+            #     trash.controlPont = 0
+            #     timer.get_elapsed_time(300)
 
             if (distOrg < 18) and ((lixo[i-1]== "peixe") or (lixo[i-1]== "maça")):            
                 trash.spawn_time = time.time()
@@ -237,14 +242,21 @@ def main():
                 trash.respawn()
                 timer.get_elapsed_time(300)
 
-            if (distRad < 18) and (lixo[i-1]== "rad"):
+            # if (distRad < 18) and (lixo[i-1]== "rad"):
+            #     trash.spawn_time = time.time()
+            #     pontuation.get_point() 
+            #     trash.controlPont = 0
+            #     trash.respawn()
+            #     timer.get_elapsed_time(300)
+
+            if (distPapel < 18) and ((lixo[i-1]== "caixa") or (lixo[i-1]== "Papel")):
                 trash.spawn_time = time.time()
                 pontuation.get_point() 
                 trash.controlPont = 0
                 trash.respawn()
                 timer.get_elapsed_time(300)
 
-            if (distPapel < 18) and (lixo[i-1]== "caixa" or (lixo[i-1]== "Papel")):
+            if (distMetal < 18) and ((lixo[i-1]== "Lata") or (lixo[i-1]== "Talher")):
                 trash.spawn_time = time.time()
                 pontuation.get_point() 
                 trash.controlPont = 0
@@ -253,9 +265,10 @@ def main():
 
             window.blit(background, (0, 0))  #Desenhe o fundo novamente para limpar a tela
             
-            binHosp.spawn(840, -50)    
+            # binHosp.spawn(840, -50)    
+            binMetal.spawn(840, -50)    
             binContami.spawn(265, 0)
-            binRad.spawn(710, 230)
+            # binRad.spawn(710, 230)
             binOrg.spawn(10, 310)
             binPlast.spawn(450, 500)
             binPapel.spawn(940, 300)
